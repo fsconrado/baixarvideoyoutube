@@ -2,11 +2,14 @@
 
 Uma ferramenta simples criada por Fabiano para baixar vídeos ou playlists completas do YouTube. 
 
-
 <div style="display: flex; justify-content: center;">
   <img src="tela.png" alt="Screenshot do App"/>
 </div>
 
+
+## Baixe o Executável
+
+Se você deseja baixar diretamente o arquivo compilado para usar o programa, [clique aqui](https://github.com/fsconrado/baixarvideoyoutube/raw/main/dist/baixarvideoyoutube).
 
 
 ## Características
@@ -23,3 +26,4 @@ Certifique-se de ter todas as bibliotecas necessárias instaladas. Você pode fa
 
 ```bash
 pip install -r requirements.txt
+
