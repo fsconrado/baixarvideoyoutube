@@ -16,7 +16,8 @@ class App(tk.Tk):
         if not os.path.exists(self.base_download_path):
             os.makedirs(self.base_download_path)
 
-        self.url_entry = ttk.Entry(self, width=60, font=("Arial", 12))
+        # self.url_entry = ttk.Entry(self, width=60, font=("Arial", 12))
+        self.url_entry = tk.Entry(self, width=60, font=("Arial", 12))
         self.url_entry.pack(pady=10)
 
         self.download_btn = tk.Button(self, text="Baixar video(s)", command=self.initiate_download, bg="cyan", fg="black", font=("Arial", 12, "bold"), height=2, width=20)
@@ -36,6 +37,13 @@ class App(tk.Tk):
         self.github_label.bind("<Button-1>", self.open_github)
 
         self.cancel_flag = threading.Event()
+
+        # Adicionar o placeholder
+        self.placeholder_text = "Adicione aqui a URL do vídeo do YouTube ou da playlist"
+        self.url_entry.insert(0, self.placeholder_text)
+        self.url_entry.bind("<FocusIn>", self.clear_placeholder)
+        self.url_entry.bind("<FocusOut>", self.add_placeholder)
+        self.url_entry.config(fg="grey")  # Cor do placeholder
 
     def initiate_download(self):
         self.download_thread = threading.Thread(target=self.start_download)
@@ -125,6 +133,19 @@ class App(tk.Tk):
 
     def open_github(self, event):
         webbrowser.open("https://github.com/fsconrado")
+
+    # Função para remover o placeholder
+    def clear_placeholder(self, e=None):
+        if self.url_entry.get() == self.placeholder_text:
+            self.url_entry.delete(0, tk.END)
+            self.url_entry.config(fg="black")  # Cor do texto padrão
+
+    # Função para adicionar o placeholder
+    def add_placeholder(self, e=None):
+        if not self.url_entry.get():
+            self.url_entry.insert(0, self.placeholder_text)
+            self.url_entry.config(fg="grey")  # Cor do placeholder
+
 
 if __name__ == "__main__":
     app = App()
