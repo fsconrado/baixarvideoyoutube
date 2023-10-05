@@ -11,6 +11,8 @@ Uma ferramenta simples criada por Fabiano para baixar vídeos ou playlists compl
 
 Se você deseja baixar diretamente o arquivo compilado para usar o programa, [clique aqui](https://github.com/fsconrado/baixarvideoyoutube/raw/main/dist/baixarvideoyoutube).
 
+Se não conseguir executar diretamente tente abrir via terminal.
+
 
 ## Características
 
