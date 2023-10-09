@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox, filedialog
 from pytube import YouTube, Playlist
 import webbrowser
 import os
@@ -7,23 +7,29 @@ import subprocess
 import threading
 import requests
 from bs4 import BeautifulSoup
+import ctypes
+
 
 class App(tk.Tk):
+
+
     def __init__(self):
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
         super().__init__()
+        self.base_download_path = ""
         self.title("Super Downloads Youtube")
-        self.base_download_path = os.path.join(os.getcwd(), "music")
-        if not os.path.exists(self.base_download_path):
+        # self.base_download_path = os.path.join(os.getcwd(), "music")
+        if self.base_download_path and not os.path.exists(self.base_download_path):
             os.makedirs(self.base_download_path)
 
         # self.url_entry = ttk.Entry(self, width=60, font=("Arial", 12))
         self.url_entry = tk.Entry(self, width=60, font=("Arial", 12))
         self.url_entry.pack(pady=10)
 
-        self.download_btn = tk.Button(self, text="Baixar video(s)", command=self.initiate_download, bg="cyan", fg="black", font=("Arial", 12, "bold"), height=2, width=20)
+        self.download_btn = tk.Button(self, text="Baixar video(s)", command=self.initiate_download, bg="blue", fg="black", font=("Arial", 12, "bold"), height=2, width=20)
         self.download_btn.pack(pady=10)
 
-        self.cancel_btn = tk.Button(self, text="Cancelar", command=self.cancel_download, bg="red", fg="black", font=("Arial", 12, "bold"), height=2, width=20)
+        self.cancel_btn = tk.Button(self, text="Cancelar", command=self.cancel_download, fg="red", font=("Arial", 12, "bold"), height=2, width=20)
         self.cancel_btn.pack(pady=10)
         self.cancel_btn.config(state=tk.DISABLED)
 
@@ -46,6 +52,7 @@ class App(tk.Tk):
         self.url_entry.config(fg="grey")  # Cor do placeholder
 
     def initiate_download(self):
+        self.ask_directory()
         self.download_thread = threading.Thread(target=self.start_download)
         self.download_thread.start()
         self.download_btn.config(state=tk.DISABLED)
@@ -145,6 +152,18 @@ class App(tk.Tk):
         if not self.url_entry.get():
             self.url_entry.insert(0, self.placeholder_text)
             self.url_entry.config(fg="grey")  # Cor do placeholder
+
+    def ask_directory(self):
+        folder_selected = filedialog.askdirectory()
+        if folder_selected:  # Se o usuário selecionar uma pasta
+            # Adicionando o subdiretório "YouTubeDownloads" ao diretório selecionado pelo usuário
+            self.base_download_path = os.path.join(folder_selected, "YouTubeDownloads")
+        else:  # Se o usuário cancelar a seleção
+            self.base_download_path = os.path.join(os.getcwd(), "YouTubeDownloads")
+
+        # Criar o diretório base se ele não existir
+        if self.base_download_path and not os.path.exists(self.base_download_path):
+            os.makedirs(self.base_download_path)
 
 
 if __name__ == "__main__":

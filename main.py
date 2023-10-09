@@ -1,10 +1,6 @@
-import os
-from tkinter import Tk, Label, Entry, Button, END
-from tkinter.ttk import Style
-from ttkthemes import ThemedTk
-# from youtube_downloader import YouTubeDownloader
 from app import App
 
+__version__ = "1.0.0"
 
 def main():
     # url_playlist = 'https://www.youtube.com/playlist?list=PLsSJYwgcH6SNeDYsic6lyjLQbZHXUcghP'
